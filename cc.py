@@ -153,7 +153,7 @@ def cc(event,socks_type):
 	if cookies != "":
 		connection += "Cookies: "+str(cookies)+"\r\n"
 	accept = Choice(acceptall)
-	host = "host:"+domain+"\r\n"
+	host = "host:"+ domain +"\r\n"
 	referer = "Referer: "+Choice(referers)+ ip + url2 + "\r\n"
 	useragent = "User-Agent: " + random.choice(useragents) + "\r\n"
 	proxy = Choice(proxies).strip().split(":")
